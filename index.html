@@ -7,7 +7,14 @@
 <meta name="description" content="Goldenrod reads screenplay PDFs in the light you want, turns one click into a comment, autosaves your notes into the PDF, and reads the script aloud with the voices on your computer. One file, runs offline, pay what you like.">
 <meta property="og:title" content="Goldenrod">
 <meta property="og:description" content="Read screenplays in the light you want. One click per comment, autosaved into the PDF. A table read with the voices on your computer. Free, pay what you like.">
-<meta property="og:image" content="shots/og.jpg">
+<meta property="og:image" content="https://geraldgordinier.github.io/goldenrod/shots/og.jpg">
+<meta property="og:url" content="https://geraldgordinier.github.io/goldenrod/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://geraldgordinier.github.io/goldenrod/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#0f0d0a">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +26,9 @@
   window.SITE = {
     payUrl: "https://buy.stripe.com/14A4gy0X00S8fKW9VF93y00",   // your Stripe payment link
     suggested: "$10",      // the suggested amount shown on the page
-    contact: ""            // optional, e.g. "you@example.com" — shown in the footer when set
+    contact: "",           // optional, e.g. "you@example.com" — shown in the footer when set
+    version: "1.0",        // bump when you upload a new goldenrod.html
+    updated: "October 2026"
   };
 </script>
 <style>
@@ -185,7 +194,7 @@
         <a class="btn primary" data-pay href="#pay">Pay what you like</a>
         <a class="btn" href="goldenrod.html" download="goldenrod.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2"/></svg>Download Goldenrod</a>
       </div>
-      <p class="fine"><span data-suggested>$10</span> suggested, nothing is fine, the download is the same either way. 2.3 MB. Mac and Windows, best in Chrome or Edge.</p>
+      <p class="fine"><span data-suggested>$10</span> suggested, nothing is fine, the download is the same either way. Version <span data-version>1.0</span>, <span data-updated>October 2026</span>. 2.3 MB. Mac and Windows, best in Chrome or Edge.</p>
     </div>
   </div>
 
@@ -311,6 +320,8 @@
       else { a.classList.add('unset'); a.title = 'Payment link coming soon'; a.addEventListener('click', function (e) { e.preventDefault(); }); }
     });
     if (s.suggested) document.querySelectorAll('[data-suggested]').forEach(function (el) { el.textContent = s.suggested; });
+    if (s.version) document.querySelectorAll('[data-version]').forEach(function (el) { el.textContent = s.version; });
+    if (s.updated) document.querySelectorAll('[data-updated]').forEach(function (el) { el.textContent = s.updated; });
     var c = document.getElementById('contact');
     if (s.contact && c) { c.hidden = false; c.innerHTML = 'Questions: <a href="mailto:' + s.contact + '">' + s.contact + '</a>'; }
   })();

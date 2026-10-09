@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Goldenrod</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%23d79b48%22/%3E%3Cpath d=%22M20 12h17l11 11v27a2 2 0 0 1-2 2H20a2 2 0 0 1-2-2V14a2 2 0 0 1 2-2z%22 fill=%22%231a1206%22/%3E%3Cpath d=%22M37 12v11h11%22 fill=%22%23d79b48%22 opacity=%22.55%22/%3E%3Cpath d=%22M25 33h18M25 40h12%22 stroke=%22%23d79b48%22 stroke-width=%223.2%22 stroke-linecap=%22round%22/%3E%3C/svg%3E">
 <meta name="description" content="Offline screenplay PDF reader with dark and night modes, highlights and comments.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231b1b1e'/%3E%3Cpath d='M9 8h10l4 4v12H9z' fill='none' stroke='%23ffd60a' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M12 15h8M12 19h8' stroke='%23ffd60a' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>:root {
@@ -661,6 +662,8 @@ body.no-pnum .pnum { display: none; }
 .vmore-row .link { font-size: 12px; }
 .menu-hint.vmore { line-height: 1.45; }
 .menu-hint.vmore div { margin: 2px 0 6px; }
+
+.help-head .ver { font-size: 12px; font-weight: 600; color: var(--muted); margin-left: 8px; vertical-align: 2px; font-family: var(--mono); }
 </style>
 </head>
 <body>
@@ -840,7 +843,7 @@ body.no-pnum .pnum { display: none; }
   </div>
   <div id="help" hidden>
     <div class="help-card">
-      <div class="help-head"><h2>Goldenrod</h2><button class="tb" id="btn-help-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+      <div class="help-head"><h2>Goldenrod <small class="ver">1.0</small></h2><button class="tb" id="btn-help-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
       <div class="help-cols">
         <div>
           <h3>Reading</h3>

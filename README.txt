@@ -6,6 +6,7 @@ What's in this folder
 index.html           the page
 goldenrod.html   the app itself (what the Download button hands out)
 shots/               screenshots used on the page (+ og.jpg for link previews)
+favicon.svg, icons/  the tab icon in a few sizes
 
 Before you publish
 ------------------
@@ -14,6 +15,7 @@ Open index.html in a text editor and fill in the three lines near the top:
     payUrl:    "https://buy.stripe.com/....."   <- your payment link (see below)
     suggested: "$10"
     contact:   "you@example.com"                 <- optional
+    version:   "1.0"  /  updated: "October 2026" <- bump these with each new goldenrod.html
 
 Until payUrl is set, the "Pay what you like" buttons show as dashed and do nothing.
 
@@ -40,8 +42,8 @@ Netlify Drop — even simpler, drag-and-drop:
 
 Either host lets you attach your own domain later.
 
-Link previews: once you know your URL, change the og:image line in index.html
-from "shots/og.jpg" to the full address, e.g. https://YOURNAME.github.io/goldenrod/shots/og.jpg
+Link previews: the og:image / og:url / canonical lines in index.html point at
+https://geraldgordinier.github.io/goldenrod/ — change them if the address changes.
 
 Taking payment (pay what you like)
 ----------------------------------
