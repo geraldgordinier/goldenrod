@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Goldenrod</title>
+<meta name="description" content="Goldenrod is a screenplay PDF reader with a real night mode, comments that save into the PDF, and a table read. One file, runs offline, pay what you like.">
+<meta property="og:title" content="Goldenrod">
+<meta property="og:description" content="Read screenplays at night. Leave notes the writer can open in Acrobat. Hear a table read. Free, pay what you like.">
+<meta property="og:image" content="shots/og.jpg">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+<script>
+  /* ============================================================
+     EDIT THESE — the only three things you need to change
+     ============================================================ */
+  window.SITE = {
+    payUrl: "",            // your Stripe / Ko-fi / PayPal link, e.g. "https://buy.stripe.com/xxxx"
+    suggested: "$10",      // the suggested amount shown on the page
+    contact: ""            // optional, e.g. "you@example.com" — shown in the footer when set
+  };
+</script>
+<style>
+  /* Layout: one left-aligned column (max 1120px); the hero is a screenplay page in Courier with a live
+     highlight-and-note, then one big screenshot, then quiet rows of text beside screenshots. Single dark
+     world on purpose: the page is the night mode it sells. */
+  :root {
+    --ink: #0f0d0a;        /* ground: warm black */
+    --paper: #e8dcc3;      /* text: cream */
+    --dim: #9d8f72;        /* secondary text */
+    --rule: #2b261d;       /* hairlines, frames */
+    --raise: #17140f;      /* the one card, screenshot mats */
+    --amber: #d79b48;      /* accent, same as the reader's night accent */
+    --amber-ink: #1a1206;  /* text on amber */
+    --mark: rgba(255, 214, 10, .22); /* highlighter on dark paper */
+    --display: "Courier Prime", "Courier New", Courier, monospace;
+    --body: "Alegreya Sans", "Gill Sans", "Segoe UI", system-ui, sans-serif;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--ink); color: var(--paper);
+    font-family: var(--body); font-size: 18px; line-height: 1.5;
+    padding-inline: clamp(16px, 4vw, 40px); padding-block: 0;
+  }
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 2px; }
+  ::selection { background: var(--mark); }
+
+  .wrap { max-width: 1120px; margin: 0 auto; }
+
+  /* ---- top bar ---- */
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px 0; }
+  .brand { font-family: var(--display); font-weight: 700; font-size: 19px; letter-spacing: .01em; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
+  .brand svg { width: 22px; height: 22px; fill: none; stroke: var(--amber); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .top nav { display: flex; gap: 22px; font-size: 16px; }
+  .top nav a { color: var(--dim); text-decoration: none; }
+  .top nav a:hover { color: var(--paper); }
+
+  /* ---- buttons ---- */
+  .btn {
+    font-family: var(--display); font-weight: 700; font-size: 16px; line-height: 1;
+    display: inline-flex; align-items: center; gap: 10px; padding: 15px 20px; border-radius: 8px;
+    text-decoration: none; border: 1px solid var(--paper); color: var(--paper); background: transparent;
+    white-space: nowrap; cursor: pointer;
+  }
+  .btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .btn:hover { background: rgba(232, 220, 195, .08); }
+  .btn.primary { background: var(--amber); border-color: var(--amber); color: var(--amber-ink); }
+  .btn.primary:hover { filter: brightness(1.07); }
+  .btn.unset { border-style: dashed; color: var(--dim); cursor: default; }
+  .btn.unset:hover { background: transparent; }
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; }
+  .fine { color: var(--dim); font-size: 15px; }
+
+  /* ---- hero: a screenplay page ---- */
+  .hero { padding-block: clamp(56px, 9vw, 110px) 40px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .scene {
+    position: relative; font-family: var(--display); font-size: clamp(15px, 1.35vw, 17.5px); line-height: 1.55;
+    max-width: 62ch; padding-right: 0;
+  }
+  .scene p { margin: 0 0 1.55em; white-space: pre-wrap; }
+  .scene .slug { text-transform: uppercase; }
+  .scene .cue { margin: 0 0 0 38%; }
+  .scene .dialog { margin: 0 0 1.55em 19%; max-width: 36ch; }
+  .scene .trans { text-align: right; margin-bottom: 0; }
+  mark { background: var(--mark); color: inherit; padding: .08em 0; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  .note {
+    position: absolute; right: -300px; top: 9.6em; width: 236px;
+    background: var(--raise); border: 1px solid var(--rule); border-left: 3px solid #ffd60a; border-radius: 8px;
+    padding: 10px 12px 12px; font-family: var(--body); font-size: 15px; line-height: 1.4;
+    animation: settle .6s ease-out .9s both;
+  }
+  .note .who { display: flex; justify-content: space-between; gap: 10px; color: var(--dim); font-size: 13px; margin-bottom: 4px; }
+  .note .who b { color: var(--paper); font-weight: 700; }
+  .note .tag { display: inline-block; margin-top: 8px; font-size: 12px; color: var(--dim); border: 1px solid var(--rule); border-radius: 999px; padding: 1px 8px; }
+  .note .tag i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #5aa7ff; margin-right: 5px; vertical-align: 1px; font-style: normal; }
+  @keyframes settle { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .note { animation: none; } }
+  .pitch { max-width: 60ch; }
+  .pitch h1 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3.4vw, 38px); line-height: 1.2; margin: 0 0 14px; letter-spacing: -.005em; text-wrap: balance; }
+  .pitch p { margin: 0 0 24px; font-size: clamp(18px, 1.6vw, 20px); }
+  .pitch .actions { margin-bottom: 14px; }
+
+  /* ---- screenshots ---- */
+  .shot { margin: 0; }
+  .shot .frame { border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; background: var(--raise); box-shadow: 0 30px 80px -30px rgba(0,0,0,.8); }
+  .shot figcaption { color: var(--dim); font-size: 15px; margin-top: 10px; }
+  .hero-shot { padding-block: 10px 0; }
+
+  /* ---- section headings ---- */
+  section { padding-block: clamp(56px, 7vw, 96px) 0; }
+  h2 { font-family: var(--display); font-weight: 700; font-size: clamp(24px, 2.6vw, 30px); line-height: 1.25; margin: 0 0 10px; letter-spacing: -.005em; text-wrap: balance; }
+  h3 { font-family: var(--display); font-weight: 700; font-size: 21px; line-height: 1.3; margin: 0 0 8px; text-wrap: balance; }
+  .lede { color: var(--dim); max-width: 60ch; margin: 0 0 34px; font-size: 18px; }
+
+  /* ---- how to use it ---- */
+  .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 40px; counter-reset: step; }
+  .steps div { max-width: 36ch; }
+  .steps h3 { display: flex; gap: 12px; align-items: baseline; }
+  .steps h3::before { counter-increment: step; content: counter(step) "."; color: var(--amber); font-weight: 400; }
+  .steps p { margin: 0; color: var(--dim); font-size: 17px; }
+  .steps kbd { font-family: var(--display); font-size: .92em; border: 1px solid var(--rule); border-radius: 4px; padding: 0 5px; color: var(--paper); }
+
+  /* ---- feature rows ---- */
+  .rows { display: grid; gap: clamp(48px, 6vw, 80px); }
+  .row { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 28px 48px; align-items: center; }
+  .row .text { max-width: 44ch; }
+  .row .text p { margin: 0 0 10px; }
+  .row .text p:last-child { margin-bottom: 0; }
+  .row .text .fine { margin-top: 10px; }
+
+  /* ---- pay ---- */
+  .pay { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-top: clamp(56px, 7vw, 96px); padding-block: clamp(40px, 5vw, 64px); display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 28px 48px; align-items: center; }
+  .pay p { max-width: 54ch; margin: 0 0 10px; }
+  .pay .big { font-family: var(--display); font-size: clamp(28px, 4vw, 44px); line-height: 1.1; margin: 0 0 14px; }
+  .pay .big small { display: block; font-size: .5em; color: var(--dim); font-weight: 400; margin-top: 6px; }
+
+  /* ---- questions ---- */
+  .qa { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 48px; margin: 0; }
+  .qa dt { font-family: var(--display); font-weight: 700; font-size: 18px; margin: 0 0 6px; }
+  .qa dd { margin: 0; color: var(--dim); max-width: 48ch; }
+  .qa dd a { color: var(--paper); }
+
+  /* ---- footer ---- */
+  footer { padding-block: 48px 40px; color: var(--dim); font-size: 15px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; }
+  footer a { color: var(--paper); }
+
+  @media (max-width: 1180px) { .note { position: static; width: auto; max-width: 320px; margin: -8px 0 28px; } }
+  @media (max-width: 820px) {
+    body { font-size: 17px; }
+    .steps, .qa { grid-template-columns: minmax(0, 1fr); }
+    .row, .pay { grid-template-columns: minmax(0, 1fr); }
+    .row .text { order: 0; } .row .shot { order: 1; }
+    .top nav { display: none; }
+    .scene .cue { margin-left: 30%; } .scene .dialog { margin-left: 12%; max-width: none; }
+  }
+  @media (max-width: 480px) {
+    .actions .btn { width: 100%; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="brand" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M8 13h8M8 17h5"/></svg>Goldenrod</a>
+    <nav aria-label="Sections"><a href="#how">How to use it</a><a href="#features">What it does</a><a href="#pay">Pay what you like</a><a href="#questions">Questions</a></nav>
+  </header>
+
+  <div class="hero">
+    <div class="scene" aria-label="A short scene">
+      <p>FADE IN:</p>
+      <p class="slug">INT. YOUR APARTMENT - 1:14 AM</p>
+      <p>A 118-page PDF glows white in a dark room. You squint at it. <mark>Your notes are in another app, your highlights are nowhere, and the writer will never see any of this.</mark></p>
+      <p class="cue">YOU</p>
+      <p class="dialog">There has to be a better way to read these.</p>
+      <aside class="note" aria-label="Example comment">
+        <div class="who"><b>Jerry</b><span>p. 1</span></div>
+        Fixed. Keep reading.
+        <span class="tag"><i></i>Structure</span>
+      </aside>
+    </div>
+
+    <div class="pitch">
+      <h1>A screenplay reader for the hours when you actually read.</h1>
+      <p>Goldenrod opens screenplay PDFs with a real night mode, lets you comment right on the line, and saves those comments into the PDF so the writer can open them in Acrobat. It can also read the script to you, a different voice per character. One file. Runs offline in your browser. No account.</p>
+      <div class="actions">
+        <a class="btn primary" href="goldenrod.html" download="goldenrod.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2"/></svg>Download Goldenrod</a>
+        <a class="btn" data-pay href="#pay">Pay what you like</a>
+      </div>
+      <p class="fine">Free. <span data-suggested>$10</span> suggested, nothing is fine. 2.3 MB. Mac and Windows, best in Chrome or Edge.</p>
+    </div>
+  </div>
+
+  <figure class="shot hero-shot">
+    <div class="frame"><img src="shots/hero.webp" width="2200" height="1375" alt="Goldenrod in night mode: a screenplay page with highlighted lines and a notes panel on the right" fetchpriority="high"></div>
+    <figcaption>Night mode, with notes pinned to the lines they're about.</figcaption>
+  </figure>
+
+  <section id="how">
+    <h2>How to use it</h2>
+    <p class="lede">There's nothing to install. The whole app is one HTML file.</p>
+    <div class="steps">
+      <div><h3>Download the file</h3><p>Keep it anywhere you like. Opening it later is just double-clicking it.</p></div>
+      <div><h3>Open it in Chrome or Edge</h3><p>Safari and Firefox work too, but autosaving into the PDF needs Chrome or Edge.</p></div>
+      <div><h3>Drop in a screenplay PDF</h3><p>Highlight a line to comment on it. Press <kbd>⌘S</kbd> to save your notes into the PDF. Press <kbd>?</kbd> for everything else.</p></div>
+    </div>
+  </section>
+
+  <section id="features">
+    <h2>What it does</h2>
+    <p class="lede">Built by a screenwriter who reads a lot of other people's scripts after dark.</p>
+    <div class="rows">
+
+      <div class="row">
+        <div class="text">
+          <h3>Reads like paper at night</h3>
+          <p>Light, sepia, dark and night themes. One page at a time or two side by side. Nudge the text lighter or bolder until it's comfortable.</p>
+          <p class="fine">Page numbers are the script's, not the PDF's, so a title page doesn't throw them off.</p>
+        </div>
+        <figure class="shot"><div class="frame"><img src="shots/two-up.webp" width="2200" height="1375" alt="Two script pages side by side in the sepia theme" loading="lazy"></div></figure>
+      </div>
+
+      <div class="row">
+        <div class="text">
+          <h3>Comment where the line is</h3>
+          <p>Highlight a line to comment on it, or pin a note anywhere on the page. Tag notes as structure, character, dialogue, logic, typo or love it, and filter by tag later.</p>
+          <p>Overall thoughts and a one-line verdict sit at the top of the panel, where coverage starts.</p>
+        </div>
+        <figure class="shot"><div class="frame"><img src="shots/comment.webp" width="2200" height="1375" alt="Writing a comment on a highlighted line, with tags to choose from" loading="lazy"></div></figure>
+      </div>
+
+      <div class="row">
+        <div class="text">
+          <h3>Your notes land in the PDF</h3>
+          <p>Save writes your notes into the file as standard comments. The writer opens it in Acrobat or Preview and sees exactly what you saw.</p>
+          <p>Comments other people left show up too. Reply in the thread and your replies go back into the file.</p>
+          <p class="fine">Reopen a saved PDF anywhere and your notes come with it.</p>
+        </div>
+        <figure class="shot"><div class="frame"><img src="shots/thread.webp" width="2200" height="1375" alt="A producer's note from Acrobat opened in Goldenrod, with two replies in the thread" loading="lazy"></div></figure>
+      </div>
+
+      <div class="row">
+        <div class="text">
+          <h3>A table read, on demand</h3>
+          <p>Hear the script read aloud with a different voice for each character and one for the narrator, cast automatically from the voices on your computer. Reassign anyone in a click.</p>
+          <p class="fine">Speeds from 0.8× to 4×. Parentheticals are skipped unless you want them.</p>
+        </div>
+        <figure class="shot"><div class="frame"><img src="shots/read.webp" width="2200" height="1375" alt="The read-aloud menu with a narrator voice and voices assigned to two characters" loading="lazy"></div></figure>
+      </div>
+
+      <div class="row">
+        <div class="text">
+          <h3>Keep track of the pile</h3>
+          <p>A scene list and a cast list with line counts for every script. A reading log that remembers where you stopped, how long you read, your pace, and the verdict you gave.</p>
+          <p class="fine">Export notes as Markdown, by page or by tag, or as an annotated copy of the PDF.</p>
+        </div>
+        <figure class="shot"><div class="frame"><img src="shots/log.webp" width="2200" height="1375" alt="The reading log listing several scripts with progress, time, notes and verdicts" loading="lazy"></div></figure>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="pay" class="pay">
+    <div>
+      <p class="big">Pay what you like <small>or nothing at all</small></p>
+      <p>Goldenrod is free to download and share. If it saves you an evening, chip in whatever feels right. The suggested amount is <span data-suggested>$10</span>, and there's no difference between the paid and unpaid versions because there's only one version.</p>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="goldenrod.html" download="goldenrod.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2"/></svg>Download Goldenrod</a>
+      <a class="btn" data-pay href="#pay">Pay what you like</a>
+    </div>
+  </section>
+
+  <section id="questions">
+    <h2>Questions</h2>
+    <dl class="qa">
+      <div><dt>Where do my scripts go?</dt><dd>Nowhere. There's no server and no account. The file runs in your browser, and your notes stay in your browser and in the PDFs you save.</dd></div>
+      <div><dt>What do I need?</dt><dd>A Mac or Windows computer and a browser. Chrome or Edge get you autosave; the table read uses the voices installed on your computer, and the realistic ones are a free download (the app shows you where).</dd></div>
+      <div><dt>Will the writer see my comments?</dt><dd>Yes, if you send them the saved PDF. They open as ordinary comments in Acrobat, Preview and most other PDF apps, with your name on them.</dd></div>
+      <div><dt>How do updates work?</dt><dd>Download the new file and replace the old one. Your notes live in the PDFs and in your browser, so nothing is lost.</dd></div>
+      <div><dt>Can I give it to my writing group?</dt><dd>Please do. Send them the file or this page.</dd></div>
+      <div><dt>I paid nothing and feel bad about it.</dt><dd>Don't. The link is right there whenever you're ready, and the app works the same either way.</dd></div>
+    </dl>
+  </section>
+
+  <footer>
+    <span>Made by Jerry Gordinier in San Francisco.</span>
+    <span id="contact" hidden></span>
+  </footer>
+
+</div>
+<script>
+  (function () {
+    var s = window.SITE || {};
+    var ok = /^https?:\/\//.test(s.payUrl || '');
+    document.querySelectorAll('[data-pay]').forEach(function (a) {
+      if (ok) { a.href = s.payUrl; a.target = '_blank'; a.rel = 'noopener'; }
+      else { a.classList.add('unset'); a.title = 'Payment link coming soon'; a.addEventListener('click', function (e) { e.preventDefault(); }); }
+    });
+    if (s.suggested) document.querySelectorAll('[data-suggested]').forEach(function (el) { el.textContent = s.suggested; });
+    var c = document.getElementById('contact');
+    if (s.contact && c) { c.hidden = false; c.innerHTML = 'Questions: <a href="mailto:' + s.contact + '">' + s.contact + '</a>'; }
+  })();
+</script>
+</body>
+</html>
