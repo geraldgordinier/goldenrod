@@ -78,7 +78,8 @@
   .fine { color: var(--dim); font-size: 15px; }
 
   /* ---- hero: a screenplay page ---- */
-  .hero { padding-block: clamp(56px, 9vw, 110px) 40px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .hero { padding-block: clamp(48px, 7vw, 88px) 36px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .outro { padding-block: clamp(56px, 7vw, 96px) 0; }
   .scene {
     position: relative; font-family: var(--display); font-size: clamp(15px, 1.35vw, 17.5px); line-height: 1.55;
     max-width: 62ch; padding-right: 0;
@@ -102,8 +103,12 @@
   @keyframes settle { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { .note { animation: none; } }
   .pitch { max-width: 60ch; }
+  .pitch.wide { max-width: none; }
   .pitch h1 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3.4vw, 38px); line-height: 1.2; margin: 0 0 14px; letter-spacing: -.005em; text-wrap: balance; }
+  .pitch.wide h1 { font-size: clamp(32px, 5.4vw, 66px); line-height: 1.12; letter-spacing: -.01em; margin-bottom: 22px; max-width: none; }
   .pitch p { margin: 0 0 24px; font-size: clamp(18px, 1.6vw, 20px); }
+  .pitch.wide p { max-width: 68ch; font-size: clamp(18px, 1.7vw, 22px); }
+  .pitch.wide .fine { font-size: 16px; }
   .pitch .actions { margin-bottom: 14px; }
 
   /* ---- screenshots ---- */
@@ -173,27 +178,14 @@
   </header>
 
   <div class="hero">
-    <div class="scene" aria-label="A short scene">
-      <p>FADE IN:</p>
-      <p class="slug">INT. YOUR APARTMENT - 1:14 AM</p>
-      <p>A 118-page PDF glows white in a dark room. You squint at it. <mark>Your notes are in another app, your highlights are nowhere, and the writer will never see any of this.</mark></p>
-      <p class="cue">YOU</p>
-      <p class="dialog">There has to be a better way to read these.</p>
-      <aside class="note" aria-label="Example comment">
-        <div class="who"><b>Jerry</b><span>p. 1</span></div>
-        Fixed. Keep reading.
-        <span class="tag"><i></i>Structure</span>
-      </aside>
-    </div>
-
-    <div class="pitch">
+    <div class="pitch wide">
       <h1>A screenplay reader for the way you actually read.</h1>
       <p>Goldenrod opens screenplay PDFs in the light you want, turns one click into a comment, and saves your notes into the PDF as you go. It reads the script aloud with the voices already on your computer, one per character, and breaks every script out by scene and character. One file. Runs offline in your browser. No account.</p>
       <div class="actions">
-        <a class="btn primary" href="goldenrod.html" download="goldenrod.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2"/></svg>Download Goldenrod</a>
-        <a class="btn" data-pay href="#pay">Pay what you like</a>
+        <a class="btn primary" data-pay href="#pay">Pay what you like</a>
+        <a class="btn" href="goldenrod.html" download="goldenrod.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2"/></svg>Download Goldenrod</a>
       </div>
-      <p class="fine">Free. <span data-suggested>$10</span> suggested, nothing is fine. 2.3 MB. Mac and Windows, best in Chrome or Edge.</p>
+      <p class="fine"><span data-suggested>$10</span> suggested, nothing is fine, the download is the same either way. 2.3 MB. Mac and Windows, best in Chrome or Edge.</p>
     </div>
   </div>
 
@@ -269,11 +261,11 @@
   <section id="pay" class="pay">
     <div>
       <p class="big">Pay what you like <small>or nothing at all</small></p>
-      <p>Goldenrod is free to download and share. If it saves you an evening, chip in whatever feels right. The suggested amount is <span data-suggested>$10</span>, and there's no difference between the paid and unpaid versions because there's only one version.</p>
+      <p>Goldenrod is free to download and share. If it saves you an evening, chip in whatever feels right. The suggested amount is <span data-suggested>$10</span>, and there's no difference between the paid and unpaid versions because there's only one version. Paying sends you straight to the download.</p>
     </div>
     <div class="actions">
-      <a class="btn primary" href="goldenrod.html" download="goldenrod.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2"/></svg>Download Goldenrod</a>
-      <a class="btn" data-pay href="#pay">Pay what you like</a>
+      <a class="btn primary" data-pay href="#pay">Pay what you like</a>
+      <a class="btn" href="goldenrod.html" download="goldenrod.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2"/></svg>Download Goldenrod</a>
     </div>
   </section>
 
@@ -287,6 +279,21 @@
       <div><dt>Can I give it to my writing group?</dt><dd>Please do. Send them the file or this page.</dd></div>
       <div><dt>I paid nothing and feel bad about it.</dt><dd>Don't. The link is right there whenever you're ready, and the app works the same either way.</dd></div>
     </dl>
+  </section>
+
+  <section class="outro" aria-label="A short scene">
+    <div class="scene">
+      <p>FADE IN:</p>
+      <p class="slug">INT. YOUR APARTMENT - 1:14 AM</p>
+      <p>A 118-page PDF glows white in a dark room. You squint at it. <mark>Your notes are in another app, your highlights are nowhere, and the writer will never see any of this.</mark></p>
+      <p class="cue">YOU</p>
+      <p class="dialog">There has to be a better way to read these.</p>
+      <aside class="note" aria-label="Example comment">
+        <div class="who"><b>Jerry</b><span>p. 1</span></div>
+        Fixed. See above.
+        <span class="tag"><i></i>Structure</span>
+      </aside>
+    </div>
   </section>
 
   <footer>

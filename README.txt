@@ -55,6 +55,11 @@ to your bank, no platform cut — just card fees of about 2.9% + 30c):
   3. Title "Goldenrod", preset amount 10, minimum 1 (Stripe won't take $0 —
      that's what the free Download button is for). Create link.
   4. Paste the link into payUrl.
+  5. Send payers to the download: open the link in Stripe -> Edit -> "After payment"
+     -> "Don't show confirmation page" -> redirect to
+     https://YOURNAME.github.io/goldenrod/thanks.html
+     That page starts the download on arrival. (Optional: Settings -> Emails ->
+     turn on receipts for successful payments.)
 
 Ko-fi (fastest to set up, 0% platform fee on tips; card/PayPal fees still apply):
   ko-fi.com -> create a page -> set your "coffee" price to $10 -> paste your
