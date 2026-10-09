@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Goldenrod</title>
-<meta name="description" content="Goldenrod is a screenplay PDF reader with a real night mode, comments that save into the PDF, and a table read. One file, runs offline, pay what you like.">
+<meta name="description" content="Goldenrod reads screenplay PDFs in the light you want, turns one click into a comment, autosaves your notes into the PDF, and reads the script aloud with the voices on your computer. One file, runs offline, pay what you like.">
 <meta property="og:title" content="Goldenrod">
-<meta property="og:description" content="Read screenplays at night. Leave notes the writer can open in Acrobat. Hear a table read. Free, pay what you like.">
+<meta property="og:description" content="Read screenplays in the light you want. One click per comment, autosaved into the PDF. A table read with the voices on your computer. Free, pay what you like.">
 <meta property="og:image" content="shots/og.jpg">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +17,7 @@
      EDIT THESE — the only three things you need to change
      ============================================================ */
   window.SITE = {
-    payUrl: "",            // your Stripe / Ko-fi / PayPal link, e.g. "https://buy.stripe.com/xxxx"
+    payUrl: "https://buy.stripe.com/14A4gy0X00S8fKW9VF93y00",   // your Stripe payment link
     suggested: "$10",      // the suggested amount shown on the page
     contact: ""            // optional, e.g. "you@example.com" — shown in the footer when set
   };
@@ -187,8 +187,8 @@
     </div>
 
     <div class="pitch">
-      <h1>A screenplay reader for the hours when you actually read.</h1>
-      <p>Goldenrod opens screenplay PDFs with a real night mode, lets you comment right on the line, and saves those comments into the PDF so the writer can open them in Acrobat. It can also read the script to you, a different voice per character. One file. Runs offline in your browser. No account.</p>
+      <h1>A screenplay reader for the way you actually read.</h1>
+      <p>Goldenrod opens screenplay PDFs in the light you want, turns one click into a comment, and saves your notes into the PDF as you go. It reads the script aloud with the voices already on your computer, one per character, and breaks every script out by scene and character. One file. Runs offline in your browser. No account.</p>
       <div class="actions">
         <a class="btn primary" href="goldenrod.html" download="goldenrod.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2"/></svg>Download Goldenrod</a>
         <a class="btn" data-pay href="#pay">Pay what you like</a>
@@ -198,8 +198,8 @@
   </div>
 
   <figure class="shot hero-shot">
-    <div class="frame"><img src="shots/hero.webp" width="2200" height="1375" alt="Goldenrod in night mode: a screenplay page with highlighted lines and a notes panel on the right" fetchpriority="high"></div>
-    <figcaption>Night mode, with notes pinned to the lines they're about.</figcaption>
+    <div class="frame"><img src="shots/modes.webp" width="2200" height="1265" alt="The same screenplay page in Goldenrod's four reading modes: light, sepia, dark and night" fetchpriority="high"></div>
+    <figcaption>The same page in all four lights: paper, sepia, dark and night.</figcaption>
   </figure>
 
   <section id="how">
@@ -208,7 +208,7 @@
     <div class="steps">
       <div><h3>Download the file</h3><p>Keep it anywhere you like. Opening it later is just double-clicking it.</p></div>
       <div><h3>Open it in Chrome or Edge</h3><p>Safari and Firefox work too, but autosaving into the PDF needs Chrome or Edge.</p></div>
-      <div><h3>Drop in a screenplay PDF</h3><p>Highlight a line to comment on it. Press <kbd>⌘S</kbd> to save your notes into the PDF. Press <kbd>?</kbd> for everything else.</p></div>
+      <div><h3>Drop in a screenplay PDF</h3><p>Turn on <kbd>Comment</kbd> and click anywhere to leave a note. It's saved into the PDF on its own. Press <kbd>?</kbd> for everything else.</p></div>
     </div>
   </section>
 
@@ -219,48 +219,48 @@
 
       <div class="row">
         <div class="text">
-          <h3>Reads like paper at night</h3>
-          <p>Light, sepia, dark and night themes. One page at a time or two side by side. Nudge the text lighter or bolder until it's comfortable.</p>
+          <h3>Pick the light you read in</h3>
+          <p>Paper, sepia, dark or night, one key to cycle through them. One page at a time or two side by side. Nudge the text lighter or bolder until it's comfortable at 1 AM.</p>
           <p class="fine">Page numbers are the script's, not the PDF's, so a title page doesn't throw them off.</p>
         </div>
-        <figure class="shot"><div class="frame"><img src="shots/two-up.webp" width="2200" height="1375" alt="Two script pages side by side in the sepia theme" loading="lazy"></div></figure>
+        <figure class="shot"><div class="frame"><img src="shots/hero.webp" width="2200" height="1375" alt="Night mode: a screenplay page with highlighted lines and the notes panel" loading="lazy"></div></figure>
       </div>
 
       <div class="row">
         <div class="text">
-          <h3>Comment where the line is</h3>
-          <p>Highlight a line to comment on it, or pin a note anywhere on the page. Tag notes as structure, character, dialogue, logic, typo or love it, and filter by tag later.</p>
-          <p>Overall thoughts and a one-line verdict sit at the top of the panel, where coverage starts.</p>
+          <h3>One click, one comment</h3>
+          <p>Turn on Comment mode and every click drops a note exactly where you clicked. It stays on until you turn it off, so a page of notes is a page of clicks, not a page of menus. Highlight a line to comment on that line instead.</p>
+          <p>Tag notes as structure, character, dialogue, logic, typo or love it, and filter by tag later. Overall thoughts and a one-line verdict sit at the top of the panel.</p>
         </div>
-        <figure class="shot"><div class="frame"><img src="shots/comment.webp" width="2200" height="1375" alt="Writing a comment on a highlighted line, with tags to choose from" loading="lazy"></div></figure>
+        <figure class="shot"><div class="frame"><img src="shots/comment-mode.webp" width="2200" height="1375" alt="Comment mode switched on, with a note being written where the page was clicked" loading="lazy"></div></figure>
       </div>
 
       <div class="row">
         <div class="text">
-          <h3>Your notes land in the PDF</h3>
-          <p>Save writes your notes into the file as standard comments. The writer opens it in Acrobat or Preview and sees exactly what you saw.</p>
-          <p>Comments other people left show up too. Reply in the thread and your replies go back into the file.</p>
-          <p class="fine">Reopen a saved PDF anywhere and your notes come with it.</p>
+          <h3>Autosaved into the PDF</h3>
+          <p>Your notes are written into the file a couple of seconds after each change, as standard PDF comments. Nothing to export, nothing to remember. The writer opens the same file in Acrobat or Preview and sees exactly what you saw.</p>
+          <p>Comments other people left show up too, with a Reply button. Your replies go back into the file.</p>
+          <p class="fine">Autosave needs Chrome or Edge. In other browsers, ⌘S does the same thing by hand.</p>
         </div>
-        <figure class="shot"><div class="frame"><img src="shots/thread.webp" width="2200" height="1375" alt="A producer's note from Acrobat opened in Goldenrod, with two replies in the thread" loading="lazy"></div></figure>
+        <figure class="shot"><div class="frame"><img src="shots/thread.webp" width="2200" height="1375" alt="A producer's note from Acrobat opened in Goldenrod with two replies, and the panel footer reading Autosaved into the PDF" loading="lazy"></div></figure>
       </div>
 
       <div class="row">
         <div class="text">
-          <h3>A table read, on demand</h3>
-          <p>Hear the script read aloud with a different voice for each character and one for the narrator, cast automatically from the voices on your computer. Reassign anyone in a click.</p>
-          <p class="fine">Speeds from 0.8× to 4×. Parentheticals are skipped unless you want them.</p>
+          <h3>A table read with the voices on your computer</h3>
+          <p>Press play and Goldenrod reads the script aloud: one voice for the narrator and a different one for each character, cast automatically from the voices already installed on your Mac or PC. Reassign anyone from a menu. It switches voices as the scene does.</p>
+          <p class="fine">Speeds from 0.8× to 4×. Parentheticals are skipped unless you want them. Apple's Premium voices and Edge's Natural voices sound best, and the app points you to them.</p>
         </div>
-        <figure class="shot"><div class="frame"><img src="shots/read.webp" width="2200" height="1375" alt="The read-aloud menu with a narrator voice and voices assigned to two characters" loading="lazy"></div></figure>
+        <figure class="shot"><div class="frame"><img src="shots/read.webp" width="2200" height="1375" alt="The read-aloud menu with a narrator voice and a different voice assigned to each of seven characters" loading="lazy"></div></figure>
       </div>
 
       <div class="row">
         <div class="text">
-          <h3>Keep track of the pile</h3>
-          <p>A scene list and a cast list with line counts for every script. A reading log that remembers where you stopped, how long you read, your pace, and the verdict you gave.</p>
-          <p class="fine">Export notes as Markdown, by page or by tag, or as an annotated copy of the PDF.</p>
+          <h3>Broken out by scene and character</h3>
+          <p>Every script gets a scene list you can jump through and a cast list with how many speeches each character has, how many pages they're on, and where they first appear. Filter either one as you type.</p>
+          <p class="fine">A reading log keeps your place, time spent, pace and verdict for every script you open.</p>
         </div>
-        <figure class="shot"><div class="frame"><img src="shots/log.webp" width="2200" height="1375" alt="The reading log listing several scripts with progress, time, notes and verdicts" loading="lazy"></div></figure>
+        <figure class="shot"><div class="frame"><img src="shots/breakdown.webp" width="2200" height="1375" alt="The Breakdown panel: a scene list and a cast of seven characters with speech counts" loading="lazy"></div></figure>
       </div>
 
     </div>
@@ -281,7 +281,7 @@
     <h2>Questions</h2>
     <dl class="qa">
       <div><dt>Where do my scripts go?</dt><dd>Nowhere. There's no server and no account. The file runs in your browser, and your notes stay in your browser and in the PDFs you save.</dd></div>
-      <div><dt>What do I need?</dt><dd>A Mac or Windows computer and a browser. Chrome or Edge get you autosave; the table read uses the voices installed on your computer, and the realistic ones are a free download (the app shows you where).</dd></div>
+      <div><dt>What do I need?</dt><dd>A Mac or Windows computer and Chrome or Edge. The table read uses the voices installed on your computer; the realistic ones are a free download, and the app shows you where.</dd></div>
       <div><dt>Will the writer see my comments?</dt><dd>Yes, if you send them the saved PDF. They open as ordinary comments in Acrobat, Preview and most other PDF apps, with your name on them.</dd></div>
       <div><dt>How do updates work?</dt><dd>Download the new file and replace the old one. Your notes live in the PDFs and in your browser, so nothing is lost.</dd></div>
       <div><dt>Can I give it to my writing group?</dt><dd>Please do. Send them the file or this page.</dd></div>
